@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation, Link } from 'react-router-dom';
 import { fetchMovieDetails, fetchMovieCredits, fetchMovieReviews } from '../api';
-// import { defaultImg } from '../constants';
-// import { StyledImage } from './Cast.styled';
 
-const MoviesDetails = () => {
+const MovieDetails = () => {
   const { movieId } = useParams();
-  const [movie, setMovie] = useState({});
+  const [movieData, setMovieData] = useState({});
   const [credits, setCredits] = useState([]);
   const [reviews, setReviews] = useState([]);
+  const location = useLocation();
+  const backLink = location.state?.from ?? '/';
 
   useEffect(() => {
-    const getMovieDetails = async () => {
+    const getMovieData = async () => {
       try {
-        const movieData = await fetchMovieDetails(movieId);
-        setMovie(movieData);
+        const movieDetails = await fetchMovieDetails(movieId);
+        setMovieData(movieDetails);
 
         const movieCredits = await fetchMovieCredits(movieId);
         setCredits(movieCredits);
@@ -26,24 +26,18 @@ const MoviesDetails = () => {
       }
     };
 
-    getMovieDetails();
+    getMovieData();
   }, [movieId]);
 
   return (
     <div>
-      <h1>{movie.title}</h1>
-      <p>{movie.overview}</p>
+      <h1>{movieData.title}</h1>
+      <p>{movieData.overview}</p>
 
       <h2>Cast</h2>
       <ul>
         {credits.map((actor) => (
-          <li key={actor.id}>
-            {/* <StyledImage
-              src={actor.profile_path ? `https://image.tmdb.org/t/p/w200/${actor.profile_path}` : defaultImg}
-              alt={`${actor.name}'s profile`}
-            /> */}
-            {actor.name}
-          </li>
+          <li key={actor.id}>{actor.name}</li>
         ))}
       </ul>
 
@@ -56,8 +50,10 @@ const MoviesDetails = () => {
           </li>
         ))}
       </ul>
+
+      <Link to={backLink}>Go Back</Link>
     </div>
   );
 };
 
-export default MoviesDetails;
+export default MovieDetails;

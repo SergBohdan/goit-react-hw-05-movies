@@ -1,46 +1,30 @@
-import React, { useEffect, useState } from 'react';
-import { useParams, useLocation, Link } from 'react-router-dom';
-import { searchMovies } from '../api';
-import MoviesList from '../components/MoviesList';
+import React from 'react';
+import { Link } from 'react-router-dom';
 
-
-const Movies = ({ searchParams }) => {
-  const { query } = searchParams;
-  const [searchResults, setSearchResults] = useState([]);
-  const location = useLocation();
-  const backLink = location.state?.from ?? '/';
-  // const { movieId } = useParams();
-
-  useEffect(() => {
-    const handleSearch = async () => {
-      if (!query) return;
-      try {
-        const movies = await searchMovies(query);
-        setSearchResults(movies);
-      } catch (error) {
-        console.error('Error searching movies:', error);
-      }
-    };
-
-    handleSearch();
-  }, [query]);
-
+const Movies = ({ selectedMovie }) => {
   return (
     <div>
-      <h1>Movies</h1>
-      {query && (
+      <h1>Movie Details</h1>
+      {selectedMovie ? (
         <div>
-          <h2>Search Results for "{query}"</h2>
-          <MoviesList movies={searchResults} />
+          <div>
+            <img
+              src={`https://image.tmdb.org/t/p/w500/${selectedMovie.poster_path}`}
+              alt={selectedMovie.title}
+              width={250}
+            />
+          </div>
+          <h2>{selectedMovie.title}</h2>
+          <p>Overview: {selectedMovie.overview}</p>
+          <p>Genres: {selectedMovie.genres.join(', ')}</p>
+          <div>
+            <Link to="cast">Cast</Link>
+            <Link to="reviews">Reviews</Link>
+          </div>
         </div>
+      ) : (
+        <p>No movie selected</p>
       )}
-      {!query && (
-        <div>
-          <h2>Trending Movies</h2>
-          <MoviesList movies={searchResults} />
-        </div>
-      )}
-      <Link to={backLink}>Go Back</Link>
     </div>
   );
 };
