@@ -1,13 +1,14 @@
 import React, { useState, useEffect, Suspense, lazy } from 'react';
-import { fetchTrendingMovies } from '../api';
-import SearchForm from '../components/SearchForm';
-import { Link, NavLink, Route, Routes } from 'react-router-dom';
+import { fetchTrendingMovies } from '../../api';
+import SearchForm from '../SearchForm/SearchForm';
+import { NavLink, Route, Routes } from 'react-router-dom';
+import { GlobalStyle } from '../../GlobalStyles';
 
-const Home = lazy(() => import('../pages/Home'));
-const Movies = lazy(() => import('../pages/Movies'));
-const MovieDetails = lazy(() => import('../pages/MoviesDetails'));
-const Cast = lazy(() => import('../components/Cast'));
-const Reviews = lazy(() => import('../components/Reviews'));
+const Home = lazy(() => import('../../pages/Home/Home'));
+const Movies = lazy(() => import('../../pages/Movies/Movies'));
+const MovieDetails = lazy(() => import('../../pages/MoviesDetails/MoviesDetails'));
+const Cast = lazy(() => import('../Cast/Cast'));
+const Reviews = lazy(() => import('../Reviews/Reviews'));
 
 const App = () => {
   const [searchParams, setSearchParams] = useState({});
@@ -49,15 +50,29 @@ const App = () => {
       </header>
       <Suspense fallback={<div>Loading...</div>}>
         <Routes>
-          <Route path="/" element={<Home movies={trendingMovies} />} />
+          <Route
+            path="/"
+            element={<Home movies={trendingMovies} />}
+          />
           <Route
             path="/movies"
             element={<Movies searchParams={searchParams} />}
           />
-          <Route path="/movies/:movieId" element={<MovieDetails />} />
-          <Route path="/movies/:movieId/cast" element={<Cast />} />
-          <Route path="/movies/:movieId/reviews" element={<Reviews />} />
+          <Route
+            path="/movies/:movieId/*"
+            element={<MovieDetails />}
+          >
+          <Route
+              path="cast"
+              element={<Cast />}
+            />
+            <Route
+              path="reviews"
+              element={<Reviews />}
+            />
+          </Route>
         </Routes>
+        <GlobalStyle />
       </Suspense>
     </div>
   );

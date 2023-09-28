@@ -3,12 +3,12 @@ import React, { useState } from 'react';
 const SearchForm = ({ onSubmit }) => {
   const [query, setQuery] = useState('');
 
-  const handleChange = e => {
-    setQuery(e.target.value);
+  const handleChange = evt => {
+    setQuery(evt.target.value);
   };
 
-  const handleSubmit = e => {
-    e.preventDefault();
+  const handleSubmit = evt => {
+    evt.preventDefault();
     onSubmit(query);
   };
 
