@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useLocation, Link } from 'react-router-dom';
-import { fetchMovieDetails, fetchMovieCredits, fetchMovieReviews } from '../api';
+import {
+  fetchMovieDetails,
+  fetchMovieCredits,
+  fetchMovieReviews,
+} from '../api';
 
 const MovieDetails = () => {
   const { movieId } = useParams();
@@ -9,6 +13,8 @@ const MovieDetails = () => {
   const [reviews, setReviews] = useState([]);
   const location = useLocation();
   const backLink = location.state?.from ?? '/';
+  const castLink = `/movies/${movieId}/cast`; // Посилання на Cast
+  const reviewsLink = `/movies/${movieId}/reviews`; // Посилання на Reviews
 
   useEffect(() => {
     const getMovieData = async () => {
@@ -33,25 +39,20 @@ const MovieDetails = () => {
     <div>
       <h1>{movieData.title}</h1>
       <p>{movieData.overview}</p>
-
-      <h2>Cast</h2>
-      <ul>
-        {credits.map((actor) => (
-          <li key={actor.id}>{actor.name}</li>
-        ))}
-      </ul>
-
-      <h2>Reviews</h2>
-      <ul>
-        {reviews.map((review) => (
-          <li key={review.id}>
-            <p>Author: {review.author}</p>
-            <p>Content: {review.content}</p>
+      <div>
+        <h2>Additional Information</h2>
+        <ul>
+          <li>
+            <Link to={`/movies/${movieId}/cast`}>Cast</Link>
           </li>
-        ))}
-      </ul>
-
-      <Link to={backLink}>Go Back</Link>
+          <li>
+            <Link to={`/movies/${movieId}/reviews`}>Reviews</Link>
+          </li>
+        </ul>
+      </div>
+      <div>
+        <Link to={backLink}>Go Back</Link>
+      </div>
     </div>
   );
 };

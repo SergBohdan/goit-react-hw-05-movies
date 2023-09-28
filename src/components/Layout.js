@@ -2,8 +2,6 @@ import React from 'react';
 
 import { Outlet, NavLink } from 'react-router-dom';
 
-
-
 export const Layout = () => {
   return (
     <div>
@@ -13,9 +11,8 @@ export const Layout = () => {
           <NavLink to="/movies">Movies</NavLink>
         </nav>
       </header>
-      
-        <Outlet />
-      
+
+      <Outlet />
     </div>
   );
 };
