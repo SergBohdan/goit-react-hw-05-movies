@@ -1,6 +1,5 @@
 import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { fetchTrendingMovies } from '../../api';
-import SearchForm from '../SearchForm/SearchForm';
 import { NavLink, Route, Routes } from 'react-router-dom';
 import { GlobalStyle } from '../../GlobalStyles';
 
@@ -46,7 +45,7 @@ const App = () => {
             </li>
           </ul>
         </nav>
-        <SearchForm onSubmit={handleSubmit} />
+        
       </header>
       <Suspense fallback={<div>Loading...</div>}>
         <Routes>
