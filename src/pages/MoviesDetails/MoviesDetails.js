@@ -26,6 +26,7 @@ const MovieDetails = () => {
     <div>
       {movie && (
         <div>
+          <Link to="/">Go Back</Link>
           <img
             src={
               movie.poster_path
@@ -61,6 +62,7 @@ const MovieDetails = () => {
               </li>
             </ul>
           </nav>
+
           <Routes>
             <Route
               path="cast"

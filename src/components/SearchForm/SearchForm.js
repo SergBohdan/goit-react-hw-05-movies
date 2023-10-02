@@ -1,28 +1,29 @@
-import React, { useState } from 'react';
+import { useSearchParams } from "react-router-dom";
 
-const SearchForm = ({ onSubmit }) => {
-  const [query, setQuery] = useState('');
+export const SearchForm = () => {
+  const [, setSearchParams] = useSearchParams();
 
-  const handleChange = evt => {
-    setQuery(evt.target.value);
-  };
-
-  const handleSubmit = evt => {
-    evt.preventDefault();
-    onSubmit(query);
+  const handleSubmit = e => {
+    e.preventDefault();
+    const inputValue = e.currentTarget.elements.query.value.trim();
+    if (!inputValue) {
+      setSearchParams({});
+    }
+    setSearchParams({ query: inputValue });
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        value={query}
-        onChange={handleChange}
-        placeholder="Search movies..."
-      />
-      <button type="submit">Search</button>
-    </form>
+    <section>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          name="query"
+          autoFocus
+          autoComplete="off"
+          placeholder="Enter movie"
+        />
+        <button type="submit">Search</button>
+      </form>
+    </section>
   );
 };
-
-export default SearchForm;

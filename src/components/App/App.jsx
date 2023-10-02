@@ -2,9 +2,9 @@ import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { fetchTrendingMovies } from '../../api';
 import { NavLink, Route, Routes } from 'react-router-dom';
 import { GlobalStyle } from '../../GlobalStyles';
+import Movies from '../../pages/Movies/Movies'; 
 
 const Home = lazy(() => import('../../pages/Home/Home'));
-const Movies = lazy(() => import('../../pages/Movies/Movies'));
 const MovieDetails = lazy(() => import('../../pages/MoviesDetails/MoviesDetails'));
 const Cast = lazy(() => import('../Cast/Cast'));
 const Reviews = lazy(() => import('../Reviews/Reviews'));
@@ -12,7 +12,7 @@ const Reviews = lazy(() => import('../Reviews/Reviews'));
 const App = () => {
   const [searchParams, setSearchParams] = useState({});
   const [trendingMovies, setTrendingMovies] = useState([]);
-  const [currentRoute, setCurrentRoute] = useState('');
+  
 
   useEffect(() => {
     const getTrendingMovies = async () => {
@@ -27,11 +27,6 @@ const App = () => {
     getTrendingMovies();
   }, []);
 
-  const handleSubmit = value => {
-    setSearchParams({ query: value });
-    setCurrentRoute('/movies');
-  };
-
   return (
     <div>
       <header>
@@ -45,7 +40,6 @@ const App = () => {
             </li>
           </ul>
         </nav>
-        
       </header>
       <Suspense fallback={<div>Loading...</div>}>
         <Routes>
@@ -55,13 +49,13 @@ const App = () => {
           />
           <Route
             path="/movies"
-            element={<Movies searchParams={searchParams} />}
+            element={<Movies searchParams={searchParams} />} 
           />
           <Route
             path="/movies/:movieId/*"
             element={<MovieDetails />}
           >
-          <Route
+            <Route
               path="cast"
               element={<Cast />}
             />

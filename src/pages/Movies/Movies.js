@@ -1,33 +1,77 @@
-import React from 'react';
-import { Link} from 'react-router-dom';
+import React, { useState } from "react";
+import { searchMovies } from "../../api";
+import { Link } from "react-router-dom";
 
-const Movies = ({ selectedMovie }) => {
+const Movies = () => {
+  const [query, setQuery] = useState("");
+  const [movies, setMovies] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isEmptyQuery, setIsEmptyQuery] = useState(false);
+
+  const fetchMovies = async () => {
+    if (query.trim() === "") {
+      setIsEmptyQuery(true);
+      setMovies([]); 
+      return;
+    }
+
+    setIsEmptyQuery(false);
+    setIsLoading(true);
+    try {
+      const result = await searchMovies(query);
+      setMovies(result);
+    } catch (error) {
+      console.error("Error fetching movies:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      fetchMovies();
+    }
+  };
+
+  const handleInputChange = (event) => {
+    setQuery(event.target.value);
+    
+    if (event.target.value.trim() === "") {
+      setMovies([]);
+    }
+  };
+
   return (
     <div>
-      {selectedMovie ? (
-        <div>
-          <div>
-            <img
-              src={`https://image.tmdb.org/t/p/w500/${selectedMovie.poster_path}`}
-              alt={selectedMovie.title}
-              width={250}
-            />
-          </div>
-          <h2>
-            {selectedMovie.title} ({selectedMovie.release_date.slice(0, 4)})
-          </h2>
-          <p>User Score: {selectedMovie.vote_average * 10}%</p>
-          <p>Overview: {selectedMovie.overview}</p>
-          <p>
-            Genres: {selectedMovie.genres.map(genre => genre.name).join(', ')}
-          </p>
-          <div>
-            <Link to={`/movies/${selectedMovie.id}/cast`}>Cast</Link>
-            <Link to={`/movies/${selectedMovie.id}/reviews`}>Reviews</Link>
-          </div>
-        </div>
+      <h1>Movies</h1>
+      <div>
+        <input
+          type="text"
+          value={query}
+          onChange={handleInputChange}
+          placeholder="Search movies..."
+          onKeyPress={handleKeyPress}
+        />
+        <button onClick={fetchMovies}>Search</button>
+      </div>
+      {isEmptyQuery && <p>Please enter a search query.</p>}
+      {!isLoading && movies.length === 0 && !isEmptyQuery }
+      {isLoading ? (
+        <div>Loading...</div>
       ) : (
-        <p>No movie selected</p>
+        <div>
+          {movies.length > 0 && (
+            <ul>
+              {movies.map((movie) => (
+                <li key={movie.id}>
+                  <Link to={`/movies/${movie.id}`}>
+                    {movie.title} ({movie.release_date.slice(0, 4)})
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
       )}
     </div>
   );
