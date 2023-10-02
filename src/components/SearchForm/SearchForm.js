@@ -1,15 +1,17 @@
-import { useSearchParams } from "react-router-dom";
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export const SearchForm = () => {
-  const [, setSearchParams] = useSearchParams();
+  const navigate = useNavigate();
 
-  const handleSubmit = e => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     const inputValue = e.currentTarget.elements.query.value.trim();
     if (!inputValue) {
-      setSearchParams({});
+      alert('Please enter a search query.');
+      return;
     }
-    setSearchParams({ query: inputValue });
+    navigate(`/movies?query=${inputValue}`);
   };
 
   return (

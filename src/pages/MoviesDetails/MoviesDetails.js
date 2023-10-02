@@ -26,7 +26,7 @@ const MovieDetails = () => {
     <div>
       {movie && (
         <div>
-          <Link to="/">Go Back</Link>
+          <Link to="/movies">Go Back</Link>
           <img
             src={
               movie.poster_path
@@ -73,7 +73,7 @@ const MovieDetails = () => {
               element={<Reviews />}
             />
           </Routes>
-        </div>
+          </div>
       )}
     </div>
   );

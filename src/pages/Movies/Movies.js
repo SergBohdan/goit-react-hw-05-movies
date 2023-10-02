@@ -1,42 +1,39 @@
-import React, { useState } from "react";
-import { searchMovies } from "../../api";
-import { Link } from "react-router-dom";
+import React, { useState } from 'react';
+import { searchMovies } from '../../api';
+import { Link } from 'react-router-dom';
 
 const Movies = () => {
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState('');
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [isEmptyQuery, setIsEmptyQuery] = useState(false);
 
   const fetchMovies = async () => {
-    if (query.trim() === "") {
-      setIsEmptyQuery(true);
-      setMovies([]); 
+    if (query.trim() === '') {
+      setMovies([]);
       return;
     }
 
-    setIsEmptyQuery(false);
     setIsLoading(true);
     try {
       const result = await searchMovies(query);
       setMovies(result);
     } catch (error) {
-      console.error("Error fetching movies:", error);
+      console.error('Error fetching movies:', error);
     } finally {
       setIsLoading(false);
     }
   };
 
   const handleKeyPress = (event) => {
-    if (event.key === "Enter") {
+    if (event.key === 'Enter') {
       fetchMovies();
     }
   };
 
   const handleInputChange = (event) => {
     setQuery(event.target.value);
-    
-    if (event.target.value.trim() === "") {
+
+    if (event.target.value.trim() === '') {
       setMovies([]);
     }
   };
@@ -54,8 +51,9 @@ const Movies = () => {
         />
         <button onClick={fetchMovies}>Search</button>
       </div>
-      {isEmptyQuery && <p>Please enter a search query.</p>}
-      {!isLoading && movies.length === 0 && !isEmptyQuery }
+      {!isLoading && movies.length === 0 && query && (
+        <p>No movies found.</p>
+      )}
       {isLoading ? (
         <div>Loading...</div>
       ) : (

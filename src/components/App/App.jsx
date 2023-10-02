@@ -10,7 +10,7 @@ const Cast = lazy(() => import('../Cast/Cast'));
 const Reviews = lazy(() => import('../Reviews/Reviews'));
 
 const App = () => {
-  const [searchParams, setSearchParams] = useState({});
+  const [searchParams] = useState({});
   const [trendingMovies, setTrendingMovies] = useState([]);
   
 
