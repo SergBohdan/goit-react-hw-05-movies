@@ -1,8 +1,9 @@
 import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { fetchTrendingMovies } from '../../api';
-import { NavLink, Route, Routes } from 'react-router-dom';
+import {  Route, Routes } from 'react-router-dom';
 import { GlobalStyle } from '../../GlobalStyles';
 import Movies from '../../pages/Movies/Movies'; 
+import { Layout } from '../Layout/Layout'; // Імпортуємо компонент Layout
 
 const Home = lazy(() => import('../../pages/Home/Home'));
 const MovieDetails = lazy(() => import('../../pages/MoviesDetails/MoviesDetails'));
@@ -13,7 +14,6 @@ const App = () => {
   const [searchParams] = useState({});
   const [trendingMovies, setTrendingMovies] = useState([]);
   
-
   useEffect(() => {
     const getTrendingMovies = async () => {
       try {
@@ -28,21 +28,11 @@ const App = () => {
   }, []);
 
   return (
-    <div>
-      <header>
-        <nav>
-          <ul>
-            <li>
-              <NavLink to="/">Home</NavLink>
-            </li>
-            <li>
-              <NavLink to="/movies">Movies</NavLink>
-            </li>
-          </ul>
-        </nav>
-      </header>
-      <Suspense fallback={<div>Loading...</div>}>
-        <Routes>
+    <Suspense fallback={<div>Loading...</div>}>
+      <Routes>
+        <Route
+          path="/"
+          element={<Layout />}>
           <Route
             path="/"
             element={<Home movies={trendingMovies} />}
@@ -64,10 +54,10 @@ const App = () => {
               element={<Reviews />}
             />
           </Route>
-        </Routes>
-        <GlobalStyle />
-      </Suspense>
-    </div>
+        </Route>
+      </Routes>
+      <GlobalStyle />
+    </Suspense>
   );
 };
 

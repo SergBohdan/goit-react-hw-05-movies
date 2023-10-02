@@ -11,7 +11,7 @@ export const Layout = () => {
           <NavLink to="/movies">Movies</NavLink>
         </nav>
       </header>
-
+      
       <Outlet />
     </div>
   );
