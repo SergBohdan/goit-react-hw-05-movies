@@ -3,7 +3,7 @@ import { fetchTrendingMovies } from '../../api';
 import {  Route, Routes } from 'react-router-dom';
 import { GlobalStyle } from '../../GlobalStyles';
 import Movies from '../../pages/Movies/Movies'; 
-import { Layout } from '../Layout/Layout'; // Імпортуємо компонент Layout
+import { Layout } from '../Layout/Layout'; 
 
 const Home = lazy(() => import('../../pages/Home/Home'));
 const MovieDetails = lazy(() => import('../../pages/MoviesDetails/MoviesDetails'));
