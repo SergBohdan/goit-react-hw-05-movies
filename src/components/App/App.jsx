@@ -1,9 +1,10 @@
+// App.js
 import React, { useState, useEffect, Suspense, lazy } from 'react';
-import { fetchTrendingMovies } from '../../api';
-import {  Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { GlobalStyle } from '../../GlobalStyles';
-import Movies from '../../pages/Movies/Movies'; 
-import { Layout } from '../Layout/Layout'; 
+import Layout from '../Layout/Layout';
+import { fetchTrendingMovies } from '../../api';
+import Movies from 'pages/Movies/Movies';
 
 const Home = lazy(() => import('../../pages/Home/Home'));
 const MovieDetails = lazy(() => import('../../pages/MoviesDetails/MoviesDetails'));
@@ -28,36 +29,31 @@ const App = () => {
   }, []);
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <Routes>
-        <Route
-          path="/"
-          element={<Layout />}>
+    <div>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Routes>
           <Route
             path="/"
-            element={<Home movies={trendingMovies} />}
-          />
-          <Route
-            path="/movies"
-            element={<Movies searchParams={searchParams} />} 
-          />
-          <Route
-            path="/movies/:movieId/*"
-            element={<MovieDetails />}
-          >
+            element={<Layout />}>
             <Route
-              path="cast"
-              element={<Cast />}
+              index
+              element={<Home movies={trendingMovies} />}
             />
             <Route
-              path="reviews"
-              element={<Reviews />}
+              path="movies"
+              element={<Movies searchParams={searchParams} />}
             />
+            <Route
+              path="movies/:movieId/*"
+              element={<MovieDetails />}>
+              <Route path="cast" element={<Cast />} />
+              <Route path="reviews" element={<Reviews />} />
+            </Route>
           </Route>
-        </Route>
-      </Routes>
-      <GlobalStyle />
-    </Suspense>
+        </Routes>
+        <GlobalStyle />
+      </Suspense>
+    </div>
   );
 };
 
