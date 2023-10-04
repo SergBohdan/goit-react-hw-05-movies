@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { fetchMovieCredits } from '../../api';
 import defaultProfileImage from '../../images/default-profile-image.png';
+import { ReviewsAuthor } from 'components/Reviews/ReviewsStyled';
 
 const Cast = () => {
   const { movieId } = useParams();
@@ -40,7 +41,7 @@ const Cast = () => {
               }}
             />
             <div>
-              <h3>{actor.name}</h3>
+              <ReviewsAuthor>{actor.name}</ReviewsAuthor>
               <p>Character: {actor.character}</p>
             </div>
           </li>

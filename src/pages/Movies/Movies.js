@@ -1,19 +1,24 @@
 import React, { useState } from 'react';
 import { searchMovies } from '../../api';
-import { Link } from 'react-router-dom';
+import MoviesList from '../../components/MoviesList/MoviesList';
+import Loader from '../../components/Loader/Loader'; 
+import { MovieTitle, SearchBtn, SearchMovies } from 'components/MoviesList/MoviesListStyled';
 
 const Movies = () => {
   const [query, setQuery] = useState('');
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isEmptyQuery, setIsEmptyQuery] = useState(false); 
 
   const fetchMovies = async () => {
     if (query.trim() === '') {
+      setIsEmptyQuery(true); 
       setMovies([]);
       return;
     }
 
     setIsLoading(true);
+    setIsEmptyQuery(false); 
     try {
       const result = await searchMovies(query);
       setMovies(result);
@@ -34,42 +39,29 @@ const Movies = () => {
     setQuery(event.target.value);
 
     if (event.target.value.trim() === '') {
+      setIsEmptyQuery(false); 
       setMovies([]);
     }
   };
 
   return (
     <div>
-      <h1>Movies</h1>
+      <MovieTitle>Movies</MovieTitle>
       <div>
-        <input
+        <SearchMovies
           type="text"
           value={query}
           onChange={handleInputChange}
           placeholder="Search movies..."
           onKeyPress={handleKeyPress}
         />
-        <button onClick={fetchMovies}>Search</button>
+        <SearchBtn onClick={fetchMovies}>Search</SearchBtn>
       </div>
-      {!isLoading && movies.length === 0 && query && (
-        <p>No movies found.</p>
-      )}
+      {isEmptyQuery && <p>Please enter a search query.</p>}
       {isLoading ? (
-        <div>Loading...</div>
+        <Loader /> 
       ) : (
-        <div>
-          {movies.length > 0 && (
-            <ul>
-              {movies.map((movie) => (
-                <li key={movie.id}>
-                  <Link to={`/movies/${movie.id}`}>
-                    {movie.title} ({movie.release_date.slice(0, 4)})
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
+        <MoviesList movies={movies} /> 
       )}
     </div>
   );
