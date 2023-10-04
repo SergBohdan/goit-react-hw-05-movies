@@ -1,6 +1,5 @@
-// App.js
 import React, { useState, useEffect, Suspense, lazy } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, Navigate, NavLink } from 'react-router-dom';
 import { GlobalStyle } from '../../GlobalStyles';
 import Layout from '../Layout/Layout';
 import { fetchTrendingMovies } from '../../api';
@@ -30,6 +29,18 @@ const App = () => {
 
   return (
     <div>
+      <header>
+        <nav>
+          <ul>
+            <li>
+              <NavLink to="/">Home</NavLink>
+            </li>
+            <li>
+              <NavLink to="/movies">Movies</NavLink>
+            </li>
+          </ul>
+        </nav>
+      </header>
       <Suspense fallback={<div>Loading...</div>}>
         <Routes>
           <Route
@@ -37,19 +48,24 @@ const App = () => {
             element={<Layout />}>
             <Route
               index
-              element={<Home movies={trendingMovies} />}
+              element={
+                <>
+                  <Home movies={trendingMovies} />
+                </>
+              }
             />
             <Route
               path="movies"
               element={<Movies searchParams={searchParams} />}
             />
             <Route
-              path="movies/:movieId/*"
+              path="movies/:movieId/*" 
               element={<MovieDetails />}>
               <Route path="cast" element={<Cast />} />
               <Route path="reviews" element={<Reviews />} />
             </Route>
           </Route>
+          <Route path="*" element={<Navigate to="/" />} />
         </Routes>
         <GlobalStyle />
       </Suspense>
