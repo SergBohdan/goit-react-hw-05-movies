@@ -26,7 +26,7 @@ const MovieDetails = () => {
     <div>
       {movie && (
         <div>
-          <Link to="/movies">Go Back</Link>
+          <Link to="/">Go Back</Link>
           <img
             src={
               movie.poster_path

@@ -1,16 +1,13 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
+import { Wrapper } from './LayoutStyled';
 
 const Layout = () => {
   return (
-    <div>
-      <header>
-        <nav>
-        </nav>
-      </header>
-
-      <Outlet />
-    </div>
+    <Wrapper>
+      
+       <Outlet />
+    </Wrapper>
   );
 };
 
