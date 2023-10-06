@@ -46,4 +46,5 @@ export const fetchMovieReviews = async (movieId) => {
   } catch (error) {
     throw error;
   }
+
 };

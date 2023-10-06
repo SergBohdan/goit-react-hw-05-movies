@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { fetchMovieCredits } from '../../api';
 import defaultProfileImage from '../../images/default-profile-image.png';
-import { ReviewsAuthor } from 'components/Reviews/ReviewsStyled';
 
 const Cast = () => {
   const { movieId } = useParams();
@@ -32,16 +31,16 @@ const Cast = () => {
               src={
                 actor.profile_path
                   ? `https://image.tmdb.org/t/p/w500${actor.profile_path}`
-                  : defaultProfileImage 
+                  : defaultProfileImage
               }
               alt={actor.name}
               style={{
-                maxWidth: '150px', 
-                maxHeight: '200px', 
+                maxWidth: '150px',
+                maxHeight: '200px',
               }}
             />
             <div>
-              <ReviewsAuthor>{actor.name}</ReviewsAuthor>
+              <p>{actor.name}</p>
               <p>Character: {actor.character}</p>
             </div>
           </li>
