@@ -13,12 +13,15 @@ export const Header = styled.header`
 export const Nav = styled.nav`
   display: flex;
   justify-content: start;
+  
+  
 
   ul {
     list-style: none;
     padding: 0;
     margin: 0;
     display: flex;
+
   }
 
   li {
@@ -31,6 +34,7 @@ export const ActiveLink = styled(NavLink)`
   color: white;
   font-weight: bold;
   font-size: 24px;
+  margin-right: 15px;
   
 
   &:hover,

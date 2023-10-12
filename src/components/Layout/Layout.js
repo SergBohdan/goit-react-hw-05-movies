@@ -1,8 +1,9 @@
 import React, { Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
-import { Wrapper } from './LayoutStyled';
 import { ActiveLink, Header, Nav } from 'components/App/AppStyled';
 import Loader from 'components/Loader/Loader';
+import { Wrapper } from './LayoutStyled';
+
 
 const Layout = () => {
   return (

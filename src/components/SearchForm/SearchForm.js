@@ -1,3 +1,4 @@
+import { SearchBtn, SearchMovies } from 'components/MoviesList/MoviesListStyled';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -8,7 +9,7 @@ export const SearchForm = () => {
     e.preventDefault();
     const inputValue = e.currentTarget.elements.query.value.trim();
     if (!inputValue) {
-      alert('Please enter a search query.');
+      alert('Please enter a search movies.');
       return;
     }
     navigate(`/movies?query=${inputValue}`);
@@ -17,14 +18,14 @@ export const SearchForm = () => {
   return (
     <section>
       <form onSubmit={handleSubmit}>
-        <input
+        <SearchMovies
           type="text"
           name="query"
           autoFocus
           autoComplete="off"
           placeholder="Enter movie"
         />
-        <button type="submit">Search</button>
+        <SearchBtn type="submit">Search</SearchBtn>
       </form>
     </section>
   );

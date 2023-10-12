@@ -3,8 +3,8 @@ import { useLocation } from 'react-router-dom';
 import { searchMovies } from '../../api';
 import MoviesList from '../../components/MoviesList/MoviesList';
 import Loader from '../../components/Loader/Loader';
-import { MovieTitle, SearchBtn, SearchMovies } from 'components/MoviesList/MoviesListStyled';
-
+import { MovieTitle } from 'components/MoviesList/MoviesListStyled';
+import { SearchForm } from 'components/SearchForm/SearchForm';
 
 const Movies = () => {
   const [query, setQuery] = useState('');
@@ -46,34 +46,12 @@ const Movies = () => {
     fetchMovies();
   }, [query]);
 
-  const handleKeyPress = (event) => {
-    if (event.key === 'Enter') {
-      setQuery(event.target.value);
-    }
-  };
-
-  const handleInputChange = (event) => {
-    setQuery(event.target.value);
-
-    if (event.target.value.trim() === '') {
-      setIsEmptyQuery(false);
-      setMovies([]);
-    }
-  };
-
   return (
     <div>
       <MovieTitle>Movies</MovieTitle>
-      <div>
-        <SearchMovies
-          type="text"
-          value={query}
-          onChange={handleInputChange}
-          placeholder="Search movies..."
-          onKeyPress={handleKeyPress}
-        />
-        <SearchBtn onClick={() => setQuery(query)}>Search</SearchBtn>
-      </div>
+      <section>
+        <SearchForm></SearchForm>
+      </section>
       {isEmptyQuery && <p>Please enter a search query.</p>}
       {isLoading ? (
         <Loader />
