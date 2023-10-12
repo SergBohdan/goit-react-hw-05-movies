@@ -1,18 +1,19 @@
 import { SearchBtn, SearchMovies } from 'components/MoviesList/MoviesListStyled';
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 
 export const SearchForm = () => {
-  const navigate = useNavigate();
+  const [, setSearchParams] = useSearchParams();
+  const [inputValue, setInputValue] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const inputValue = e.currentTarget.elements.query.value.trim();
-    if (!inputValue) {
-      alert('Please enter a search movies.');
+    const trimmedValue = inputValue.trim();
+    if (!trimmedValue) {
+      alert('Please enter a search query.');
       return;
     }
-    navigate(`/movies?query=${inputValue}`);
+    setSearchParams({ query: trimmedValue });
   };
 
   return (
@@ -24,9 +25,12 @@ export const SearchForm = () => {
           autoFocus
           autoComplete="off"
           placeholder="Enter movie"
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
         />
         <SearchBtn type="submit">Search</SearchBtn>
       </form>
     </section>
   );
 };
+

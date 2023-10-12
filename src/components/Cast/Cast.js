@@ -40,7 +40,7 @@ const Cast = () => {
               }}
             />
             <div>
-              <p>{actor.name}</p>
+              <h3>{actor.name}</h3>
               <p>Character: {actor.character}</p>
             </div>
           </li>

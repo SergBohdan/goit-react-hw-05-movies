@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { fetchTrendingMovies } from '../../api';
 import Loader from '../../components/Loader/Loader';
 import MoviesList from '../../components/MoviesList/MoviesList';
-import Layout from '../../components/Layout/Layout';
 import { MovieTitle } from 'components/MoviesList/MoviesListStyled';
 
 const Home = () => {
