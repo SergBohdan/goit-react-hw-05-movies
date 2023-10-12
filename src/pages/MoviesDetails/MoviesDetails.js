@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { useParams, Link, Route, Routes } from 'react-router-dom';
+import React, { useEffect, useRef, useState } from 'react';
+import { useParams, Link, Route, Routes, useLocation } from 'react-router-dom';
 import { fetchMovieDetails } from '../../api';
 import Cast from '../../components/Cast/Cast';
 import Reviews from '../../components/Reviews/Reviews';
@@ -9,6 +9,8 @@ import { LinkActors, MoviesAbout, MoviesDscr } from './MoviesDetailsStyled';
 const MovieDetails = () => {
   const { movieId } = useParams();
   const [movie, setMovie] = useState(null);
+  const location = useLocation();
+  const moveBack = useRef(location?.state?.from ?? '/');
 
   useEffect(() => {
     const getMovieDetails = async () => {
@@ -28,7 +30,7 @@ const MovieDetails = () => {
     <Wrapper>
       {movie && (
         <div>
-          <Link to="/">Go Back</Link>
+          <Link to={moveBack.current}>Go Back</Link>
           <MoviesDscr>
             <img
               src={
