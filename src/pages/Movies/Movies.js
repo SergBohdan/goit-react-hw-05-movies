@@ -1,63 +1,44 @@
-import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
-import { searchMovies } from '../../api';
+import React, { useEffect, useState, useRef } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import MoviesList from '../../components/MoviesList/MoviesList';
 import Loader from '../../components/Loader/Loader';
 import { MovieTitle } from 'components/MoviesList/MoviesListStyled';
 import { SearchForm } from 'components/SearchForm/SearchForm';
+import { searchMovies } from '../../api';
 
 const Movies = () => {
-  const [query, setQuery] = useState('');
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isEmptyQuery, setIsEmptyQuery] = useState(false);
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  const location = useLocation();
-
-  useEffect(() => {
-    const searchParams = new URLSearchParams(location.search);
-    const queryFromURL = searchParams.get('query');
-
-    if (queryFromURL) {
-      setQuery(queryFromURL);
-    }
-  }, [location]);
+  const queryRef = useRef(searchParams.get('query') || '');
 
   useEffect(() => {
-    const fetchMovies = async () => {
-      if (query.trim() === '') {
-        setIsEmptyQuery(true);
-        setMovies([]);
-        return;
-      }
-
+    if (searchParams.get('query') !== queryRef.current || !queryRef.current) {
+      queryRef.current = searchParams.get('query') || '';
       setIsLoading(true);
       setIsEmptyQuery(false);
-      try {
-        const result = await searchMovies(query);
-        setMovies(result);
-      } catch (error) {
-        console.error('Error fetching movies:', error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
 
-    fetchMovies();
-  }, [query]);
+      searchMovies(queryRef.current)
+        .then((result) => setMovies(result))
+        .catch((error) => {
+          console.error('Error fetching movies:', error);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    }
+  }, [searchParams]);
 
   return (
     <div>
       <MovieTitle>Movies</MovieTitle>
       <section>
-        <SearchForm></SearchForm>
+        <SearchForm setSearchParams={setSearchParams}></SearchForm>
       </section>
       {isEmptyQuery && <p>Please enter a search query.</p>}
-      {isLoading ? (
-        <Loader />
-      ) : (
-        <MoviesList movies={movies} />
-      )}
+      {isLoading ? <Loader /> : <MoviesList movies={movies} />}
     </div>
   );
 };
