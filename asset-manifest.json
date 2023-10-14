@@ -1,9 +1,9 @@
 {
   "files": {
     "main.css": "/goit-react-hw-05-movies/static/css/main.7cda0caf.css",
-    "main.js": "/goit-react-hw-05-movies/static/js/main.8a6dd7b4.js",
+    "main.js": "/goit-react-hw-05-movies/static/js/main.c4f0b70e.js",
     "static/js/75.de1b2bb5.chunk.js": "/goit-react-hw-05-movies/static/js/75.de1b2bb5.chunk.js",
-    "static/js/524.c55dba0a.chunk.js": "/goit-react-hw-05-movies/static/js/524.c55dba0a.chunk.js",
+    "static/js/524.8b182808.chunk.js": "/goit-react-hw-05-movies/static/js/524.8b182808.chunk.js",
     "static/js/729.3be47c4a.chunk.js": "/goit-react-hw-05-movies/static/js/729.3be47c4a.chunk.js",
     "static/js/35.01294fd0.chunk.js": "/goit-react-hw-05-movies/static/js/35.01294fd0.chunk.js",
     "static/js/204.9c2b773e.chunk.js": "/goit-react-hw-05-movies/static/js/204.9c2b773e.chunk.js",
@@ -11,9 +11,9 @@
     "static/media/default-profile-image.png": "/goit-react-hw-05-movies/static/media/default-profile-image.b186c4a920b7e6b33fbf.png",
     "index.html": "/goit-react-hw-05-movies/index.html",
     "main.7cda0caf.css.map": "/goit-react-hw-05-movies/static/css/main.7cda0caf.css.map",
-    "main.8a6dd7b4.js.map": "/goit-react-hw-05-movies/static/js/main.8a6dd7b4.js.map",
+    "main.c4f0b70e.js.map": "/goit-react-hw-05-movies/static/js/main.c4f0b70e.js.map",
     "75.de1b2bb5.chunk.js.map": "/goit-react-hw-05-movies/static/js/75.de1b2bb5.chunk.js.map",
-    "524.c55dba0a.chunk.js.map": "/goit-react-hw-05-movies/static/js/524.c55dba0a.chunk.js.map",
+    "524.8b182808.chunk.js.map": "/goit-react-hw-05-movies/static/js/524.8b182808.chunk.js.map",
     "729.3be47c4a.chunk.js.map": "/goit-react-hw-05-movies/static/js/729.3be47c4a.chunk.js.map",
     "35.01294fd0.chunk.js.map": "/goit-react-hw-05-movies/static/js/35.01294fd0.chunk.js.map",
     "204.9c2b773e.chunk.js.map": "/goit-react-hw-05-movies/static/js/204.9c2b773e.chunk.js.map",
@@ -21,6 +21,6 @@
   },
   "entrypoints": [
     "static/css/main.7cda0caf.css",
-    "static/js/main.8a6dd7b4.js"
+    "static/js/main.c4f0b70e.js"
   ]
 }
