@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import MoviesList from '../../components/MoviesList/MoviesList';
 import Loader from '../../components/Loader/Loader';
@@ -12,15 +12,17 @@ const Movies = () => {
   const [isEmptyQuery, setIsEmptyQuery] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const queryRef = useRef(searchParams.get('query') || '');
+
 
   useEffect(() => {
-    if (searchParams.get('query') !== queryRef.current || !queryRef.current) {
-      queryRef.current = searchParams.get('query') || '';
+const query = searchParams.get('query')
+
+    if (!query)return ;
+      
       setIsLoading(true);
       setIsEmptyQuery(false);
 
-      searchMovies(queryRef.current)
+      searchMovies(query)
         .then((result) => setMovies(result))
         .catch((error) => {
           console.error('Error fetching movies:', error);
@@ -28,7 +30,7 @@ const Movies = () => {
         .finally(() => {
           setIsLoading(false);
         });
-    }
+    
   }, [searchParams]);
 
   return (
